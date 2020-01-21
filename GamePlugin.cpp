@@ -15,7 +15,7 @@
 
 CGamePlugin::~CGamePlugin()
 {
-	// 在此处之前移除其他Listener
+	// 在此处(this析构之前)移除Listener
 	if (gEnv->pGameFramework != nullptr)
 	{
 		gEnv->pGameFramework->RemoveNetworkedClientListener(*this);
