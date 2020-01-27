@@ -105,15 +105,15 @@ enum class EEntityComponentFlags : uint32
 };
 typedef CEnumFlags<EEntityComponentFlags> EntityComponentFlags;
 
-//! Structure that describes how one entity component
-//! interacts with another entity component.
+//! 描述一个实体组件(entity component)如何
+//! 与另一个实体组件(entity component)交互的Structure
 struct SEntityComponentRequirements
 {
 	enum class EType : uint32
 	{
-		Incompatibility,  //!< These components are incompatible and cannot be used together
-		SoftDependency,   //!< Dependency must be initialized before component.
-		HardDependency    //!< Dependency must exist and be initialized before component.
+		Incompatibility,  //!< (表示)这些组件(components)是互斥的，不可以同时使用
+		SoftDependency,   //!< (表示)依赖(Dependency)必须在组件(component)之前初始化.
+		HardDependency    //!< (表示)依赖(Dependency)必须存在并且被在组件(component)之前初始化.
 	};
 
 	inline SEntityComponentRequirements(EType _type, const CryGUID& _guid)
@@ -125,6 +125,8 @@ struct SEntityComponentRequirements
 	CryGUID guid;
 };
 
+//! 编辑器用的接口，用来预览这个实体组件的渲染
+//! 这个可以用来取得帮助指针或者预览沙盒里面的element
 //! Interface used by the editor to Preview Render of the entity component
 //! This can be used to draw helpers or preview elements in the sandbox
 //! \par Example
@@ -133,15 +135,15 @@ struct IEntityComponentPreviewer
 {
 	virtual ~IEntityComponentPreviewer() {}
 
-	//! Override this method to Edit UI properties for previewer of the component
+	//! 重写这个方法来为这个组件的预览器编辑UI属性 Override this method to Edit UI properties for previewer of the component
 	virtual void SerializeProperties(Serialization::IArchive& archive) = 0;
 
-	//! Override this method to Render a preview of the Entity Component
-	//! This method is not used when entity is normally rendered
-	//! But only used for previewing the entity in the Sandbox Editor
-	//! \param entity Entity which gets drawn
-	//! \param component Component which is gets drawn
-	//! \param context PreviewContext contains information and settings for the rendering
+	//! 重写这个方法来渲染出这个实体组件的预览 Override this method to Render a preview of the Entity Component
+	//! 当实体被正常渲染时此方法不会被调用 This method is not used when entity is normally rendered
+	//! 只在此实体被沙盒编辑器中预览的时候使用 But only used for previewing the entity in the Sandbox Editor
+	//! \param entity 被画出的实体 Entity which gets drawn
+	//! \param component 被画出的组件 Component which is gets drawn
+	//! \param context 预览用的包含渲染用的信息以及设置的上下文 PreviewContext contains information and settings for the rendering
 	//! \see IEntity::SEntityPreviewContext
 	virtual void Render(const IEntity& entity, const IEntityComponent& component, SEntityPreviewContext& context) const = 0;
 };
@@ -213,8 +215,8 @@ namespace Schematyc
 {
 struct SObjectSignal;
 //////////////////////////////////////////////////////////////////////////
-// All classes derived from IEntityComponent will be using
-// CEntityComponentClassDesc
+// 所有派生自IEntityComponent的类都会使用CEntityComponentClassDesc
+// All classes derived from IEntityComponent will be using CEntityComponentClassDesc
 //////////////////////////////////////////////////////////////////////////
 namespace Helpers
 {
